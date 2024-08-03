@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { people } from "./data.js";
+import { getImageUrl } from "./utils.js";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const createListItem = (person) => {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+    <li key={person.id}>
+      <img src={getImageUrl(person)} alt={person.name} />
+      <p>
+        <b>{person.name}:</b>
+        {" " + person.profession + " "}
+        known for {person.accomplishment}
       </p>
-    </>
-  )
-}
+    </li>
+  );
+};
 
-export default App
+export default function List() {
+  const chemists = people.filter((person) => person.profession === "chemist");
+  const notChemist = people.filter((person) => person.profession != "chemist");
+  const chemistList = chemists.map((person) => createListItem(person));
+  const notChemistList = notChemist.map((person) => createListItem(person));
+  return (
+    <article>
+      <h1>Chemists</h1>
+      <ul>{chemistList}</ul>
+      <h1>everyoneElse</h1>
+      <ul>{notChemistList}</ul>
+    </article>
+  );
+}
