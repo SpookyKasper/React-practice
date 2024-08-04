@@ -1,31 +1,23 @@
 import { Fragment } from "react";
-import { recipes } from "./data.js";
 
-const ingredientComponent = (ingredient) => {
-  return <li key={ingredient}>{ingredient}</li>;
+const poem = {
+  lines: [
+    "I write, erase, rewrite",
+    "Erase again, and then",
+    "A poppy blooms.",
+  ],
 };
 
-const RecipeComponent = ({ id, name, ingredients }) => {
-  const ingredientList = ingredients.map((ingredient) =>
-    ingredientComponent(ingredient)
-  );
+const verseComponent = (line, index) => {
   return (
-    <Fragment key={id}>
-      <h2>{name}</h2>
-      {ingredientList}
-      <br></br>
+    <Fragment key={index}>
+      {index > 0 && <hr />}
+      <p key={index}>{line}</p>
     </Fragment>
   );
 };
 
-export default function RecipeList() {
-  const recipeList = recipes.map((recipe) => (
-    <RecipeComponent {...recipe} key={recipe.id} />
-  ));
-  return (
-    <div>
-      <h1>Recipes</h1>
-      {recipeList}
-    </div>
-  );
+export default function Poem() {
+  const poemList = poem.lines.map((line, index) => verseComponent(line, index));
+  return <article>{poemList}</article>;
 }
