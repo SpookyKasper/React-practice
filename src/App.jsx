@@ -1,30 +1,31 @@
-import { people } from "./data.js";
-import { getImageUrl } from "./utils.js";
+import { Fragment } from "react";
+import { recipes } from "./data.js";
 
-const createListItem = (person) => {
+const ingredientComponent = (ingredient) => {
+  return <li key={ingredient}>{ingredient}</li>;
+};
+
+const RecipeComponent = ({ id, name, ingredients }) => {
+  const ingredientList = ingredients.map((ingredient) =>
+    ingredientComponent(ingredient)
+  );
   return (
-    <li key={person.id}>
-      <img src={getImageUrl(person)} alt={person.name} />
-      <p>
-        <b>{person.name}:</b>
-        {" " + person.profession + " "}
-        known for {person.accomplishment}
-      </p>
-    </li>
+    <Fragment key={id}>
+      <h2>{name}</h2>
+      {ingredientList}
+      <br></br>
+    </Fragment>
   );
 };
 
-export default function List() {
-  const chemists = people.filter((person) => person.profession === "chemist");
-  const notChemist = people.filter((person) => person.profession != "chemist");
-  const chemistList = chemists.map((person) => createListItem(person));
-  const notChemistList = notChemist.map((person) => createListItem(person));
+export default function RecipeList() {
+  const recipeList = recipes.map((recipe) => (
+    <RecipeComponent {...recipe} key={recipe.id} />
+  ));
   return (
-    <article>
-      <h1>Chemists</h1>
-      <ul>{chemistList}</ul>
-      <h1>everyoneElse</h1>
-      <ul>{notChemistList}</ul>
-    </article>
+    <div>
+      <h1>Recipes</h1>
+      {recipeList}
+    </div>
   );
 }
