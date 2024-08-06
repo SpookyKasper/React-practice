@@ -1,47 +1,22 @@
 import { useState } from "react";
-import { sculptureList } from "./data.js";
 
-export default function Gallery() {
-  const [index, setIndex] = useState(0);
-  const [showMore, setShowMore] = useState(false);
-
-  function handleNextClick() {
-    if (index + 1 === sculptureList.length) {
-      console.log(index);
-      return;
-    }
-    setIndex(index + 1);
-  }
-
-  function handlePreviousClick() {
-    if (index === 0) {
-      console.log(index);
-      return;
-    }
-    setIndex(index - 1);
-  }
-
-  function handleMoreClick() {
-    setShowMore(!showMore);
-  }
-
-  let sculpture = sculptureList[index];
+export default function SyncedInputs() {
+  const [text, setText] = useState("");
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
   return (
     <>
-      <button onClick={handleNextClick}>Next</button>
-      <button onClick={handlePreviousClick}>Previous</button>
-      <h2>
-        <i>{sculpture.name} </i>
-        by {sculpture.artist}
-      </h2>
-      <h3>
-        ({index + 1} of {sculptureList.length})
-      </h3>
-      <button onClick={handleMoreClick}>
-        {showMore ? "Hide" : "Show"} details
-      </button>
-      {showMore && <p>{sculpture.description}</p>}
-      <img src={sculpture.url} alt={sculpture.alt} />
+      <Input label="First input" text={text} onChange={handleChange} />
+      <Input label="Second input" text={text} onChange={handleChange} />
     </>
+  );
+}
+
+function Input({ label, text, onChange }) {
+  return (
+    <label>
+      {label} <input value={text} onChange={onChange} />
+    </label>
   );
 }
