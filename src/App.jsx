@@ -1,22 +1,6 @@
 import { useState } from "react";
 
-export default function SyncedInputs() {
-  const [text, setText] = useState("");
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
-  return (
-    <>
-      <Input label="First input" text={text} onChange={handleChange} />
-      <Input label="Second input" text={text} onChange={handleChange} />
-    </>
-  );
-}
-
-function Input({ label, text, onChange }) {
-  return (
-    <label>
-      {label} <input value={text} onChange={onChange} />
-    </label>
-  );
+export default function Clock(props) {
+  const [color, setColor] = useState(props.color);
+  return <h1 style={{ color: color }}>{props.time}</h1>;
 }
