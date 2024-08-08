@@ -6,7 +6,7 @@ export default function MailClient() {
   const [selectedIds, setSelectedIds] = useState([]);
 
   // TODO: allow multiple selection
-  const selectedCount = 1;
+  const selectedCount = selectedIds.length;
 
   function handleToggle(toggledId) {
     if (selectedIds.includes(toggledId)) {
