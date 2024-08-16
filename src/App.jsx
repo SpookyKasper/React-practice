@@ -1,45 +1,39 @@
-import { useState } from "react";
-import { letters } from "./data.js";
-import Letter from "./Letter.js";
+import { useState, useEffect } from "react";
+import { createConnection } from "./chat.js";
 
-export default function MailClient() {
-  const [selectedIds, setSelectedIds] = useState([]);
+const serverUrl = "https://localhost:1234";
 
-  // TODO: allow multiple selection
-  const selectedCount = selectedIds.length;
+function ChatRoom({ roomId }) {
+  const [message, setMessage] = useState("");
 
-  function handleToggle(toggledId) {
-    if (selectedIds.includes(toggledId)) {
-      const selected = selectedIds.filter((id) => id !== toggledId);
-      setSelectedIds(selected);
-    } else {
-      // TODO: allow multiple selection
-      const selected = selectedIds.map((id) => id);
-      selected.push(toggledId);
-      setSelectedIds(selected);
-    }
-  }
+  useEffect(() => {
+    const connection = createConnection(serverUrl, roomId);
+    connection.connect();
+    return () => connection.disconnect();
+  }, []);
 
   return (
     <>
-      <h2>Inbox</h2>
-      <ul>
-        {letters.map((letter) => (
-          <Letter
-            key={letter.id}
-            letter={letter}
-            isSelected={
-              // TODO: allow multiple selection
-              selectedIds.includes(letter.id)
-            }
-            onToggle={handleToggle}
-          />
-        ))}
-        <hr />
-        <p>
-          <b>You selected {selectedCount} letters</b>
-        </p>
-      </ul>
+      <h1>Welcome to the {roomId} room!</h1>
+      <input value={message} onChange={(e) => setMessage(e.target.value)} />
+    </>
+  );
+}
+
+export default function App() {
+  const [roomId, setRoomId] = useState("general");
+  return (
+    <>
+      <label>
+        Choose the chat room:{" "}
+        <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
+          <option value="general">general</option>
+          <option value="travel">travel</option>
+          <option value="music">music</option>
+        </select>
+      </label>
+      <hr />
+      <ChatRoom roomId={roomId} />
     </>
   );
 }
