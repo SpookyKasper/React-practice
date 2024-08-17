@@ -1,39 +1,49 @@
+import React from "react";
 import { useState, useEffect } from "react";
-import { createConnection } from "./chat.js";
+import { initialTodos, createTodo } from "./todos.js";
 
-const serverUrl = "https://localhost:1234";
+export default function TodoList() {
+  const [todos, setTodos] = useState(initialTodos);
+  const [showActive, setShowActive] = useState(false);
 
-function ChatRoom({ roomId }) {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    const connection = createConnection(serverUrl, roomId);
-    connection.connect();
-    return () => connection.disconnect();
-  }, []);
+  const activeTodos = todos.filter((todo) => !todo.completed);
+  const visibleTodos = showActive ? activeTodos : todos;
 
   return (
     <>
-      <h1>Welcome to the {roomId} room!</h1>
-      <input value={message} onChange={(e) => setMessage(e.target.value)} />
+      <label>
+        <input
+          type="checkbox"
+          checked={showActive}
+          onChange={(e) => setShowActive(e.target.checked)}
+        />
+        Show only active todos
+      </label>
+      <NewTodo onAdd={(newTodo) => setTodos([...todos, newTodo])} />
+      <ul>
+        {visibleTodos.map((todo) => (
+          <li key={todo.id}>
+            {todo.completed ? <s>{todo.text}</s> : todo.text}
+          </li>
+        ))}
+      </ul>
+      <footer>{activeTodos.length} todos left</footer>
     </>
   );
 }
 
-export default function App() {
-  const [roomId, setRoomId] = useState("general");
+function NewTodo({ onAdd }) {
+  const [text, setText] = useState("");
+
+  function handleAddClick() {
+    setText("");
+    onAdd(createTodo(text));
+  }
+
   return (
     <>
-      <label>
-        Choose the chat room:{" "}
-        <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
-          <option value="general">general</option>
-          <option value="travel">travel</option>
-          <option value="music">music</option>
-        </select>
-      </label>
-      <hr />
-      <ChatRoom roomId={roomId} />
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <button onClick={handleAddClick}>Add</button>
     </>
   );
 }
