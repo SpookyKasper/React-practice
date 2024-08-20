@@ -1,5 +1,6 @@
 import { Component, Fragment } from "react";
 import React from "react";
+import Count from "./Count";
 
 class ClassInput extends Component {
   constructor(props) {
@@ -63,6 +64,7 @@ class ClassInput extends Component {
             </Fragment>
           ))}
         </ul>
+        <Count count={this.state.todos.length} />
       </section>
     );
   }
