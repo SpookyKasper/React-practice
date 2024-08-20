@@ -1,46 +1,71 @@
-import { useState, useEffect } from "react";
+import { Component, Fragment } from "react";
 import React from "react";
 
-export default function Form() {
-  const [showForm, setShowForm] = useState(false);
-  const [message, setMessage] = useState("");
+class ClassInput extends Component {
+  constructor(props) {
+    super(props);
 
-  function handleSubmit(e) {
-    sendMessage(message);
-    e.preventDefault();
-    setShowForm(false);
+    this.state = {
+      todos: [],
+      inputVal: "",
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDeleteItem = this.handleDeleteItem.bind(this);
   }
 
-  if (!showForm) {
+  handleInputChange(e) {
+    this.setState((state) => ({
+      ...state,
+      inputVal: e.target.value,
+    }));
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState((state) => ({
+      todos: state.todos.concat(state.inputVal),
+      inputVal: "",
+    }));
+  }
+
+  handleDeleteItem(e) {
+    console.log(this);
+    this.setState((state) => ({
+      todos: state.todos.filter((todo) => todo != e.target.id),
+      inputVal: "",
+    }));
+  }
+
+  render() {
     return (
-      <>
-        <h1>Thanks for using our services!</h1>
-        <button
-          onClick={() => {
-            setMessage("");
-            setShowForm(true);
-          }}
-        >
-          Open chat
-        </button>
-      </>
+      <section>
+        <h3>{this.props.name}</h3>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="task-entry">Enter a task: </label>
+          <input
+            type="text"
+            name="task-entry"
+            value={this.state.inputVal}
+            onChange={this.handleInputChange}
+          />
+          <button type="submit">Submit</button>
+        </form>
+        <h4>All the tasks!</h4>
+        <ul>
+          {this.state.todos.map((todo) => (
+            <Fragment key={todo}>
+              <li>{todo}</li>
+              <button id={todo} onClick={this.handleDeleteItem}>
+                X
+              </button>
+            </Fragment>
+          ))}
+        </ul>
+      </section>
     );
   }
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <textarea
-        placeholder="Message"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <button type="submit" disabled={message === ""}>
-        Send
-      </button>
-    </form>
-  );
 }
 
-function sendMessage(message) {
-  console.log("Sending message: " + message);
-}
+export default ClassInput;
