@@ -33,7 +33,6 @@ class ClassInput extends Component {
   }
 
   handleDeleteItem(e) {
-    console.log(this);
     this.setState((state) => ({
       todos: state.todos.filter((todo) => todo != e.target.id),
       inputVal: "",
@@ -61,7 +60,7 @@ class ClassInput extends Component {
               key={todo}
               todo={todo}
               handleDeleteItem={this.handleDeleteItem}
-              handleSubmit={this.handleSubmit}
+              updateTodo={this.updateTodo}
               onChange={this.handleInputChange}
             />
           ))}

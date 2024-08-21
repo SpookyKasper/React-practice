@@ -9,23 +9,28 @@ class Todo extends Component {
       isEdditing: false,
       inputVal: this.props.todo,
     };
-
-    this.handleEdit = this.handleEdit.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleInputChange(e) {
+  handleInputChange = (e) => {
     this.setState((state) => ({
       ...state,
       inputVal: e.target.value,
     }));
-  }
+  };
 
-  handleEdit() {
+  handleEdit = () => {
     this.setState((state) => ({
+      ...state,
       isEdditing: true,
     }));
-  }
+  };
+
+  handleResubmit = (e) => {
+    this.setState((state) => ({
+      ...state,
+      isEdditing: false,
+    }));
+  };
 
   todoContent() {
     if (this.state.isEdditing) {
@@ -39,7 +44,7 @@ class Todo extends Component {
           <button id={this.props.todo} onClick={this.props.handleDeleteItem}>
             X
           </button>
-          <button id={this.props.todo} onClick={this.handleEdit}>
+          <button id={this.props.todo} onClick={this.handleResubmit}>
             Resubmit
           </button>
         </>
@@ -47,7 +52,7 @@ class Todo extends Component {
     } else {
       return (
         <>
-          <li>{this.props.todo}</li>
+          <li>{this.state.inputVal}</li>
           <button id={this.props.todo} onClick={this.props.handleDeleteItem}>
             X
           </button>
