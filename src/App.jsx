@@ -1,6 +1,7 @@
 import { Component, Fragment } from "react";
 import React from "react";
 import Count from "./Count";
+import Todo from "./Todo";
 
 class ClassInput extends Component {
   constructor(props) {
@@ -56,12 +57,13 @@ class ClassInput extends Component {
         <h4>All the tasks!</h4>
         <ul>
           {this.state.todos.map((todo) => (
-            <Fragment key={todo}>
-              <li>{todo}</li>
-              <button id={todo} onClick={this.handleDeleteItem}>
-                X
-              </button>
-            </Fragment>
+            <Todo
+              key={todo}
+              todo={todo}
+              handleDeleteItem={this.handleDeleteItem}
+              handleSubmit={this.handleSubmit}
+              onChange={this.handleInputChange}
+            />
           ))}
         </ul>
         <Count count={this.state.todos.length} />
