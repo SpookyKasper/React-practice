@@ -7,8 +7,10 @@ import React from "react";
 export default function Messenger() {
   const [state, dispatch] = useReducer(messengerReducer, initialState);
   const contact = contacts.find((c) => c.id === state.selectedId);
-  const messages = state.messages;
-  const messageObj = messages.find((mess) => mess.id === state.selectedId);
+  const messageObj = state.messages.find(
+    (mess) => mess.id === state.selectedId
+  );
+
   return (
     <div>
       <ContactList
