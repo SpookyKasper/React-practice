@@ -1,13 +1,14 @@
 import { useReducer } from "react";
-import Chat from "./Chat.js";
-import ContactList from "./ContactList.js";
+import Chat from "./Chat.jsx";
+import ContactList from "./ContactList.jsx";
 import { initialState, messengerReducer } from "./messengerReducer";
 import React from "react";
 
 export default function Messenger() {
   const [state, dispatch] = useReducer(messengerReducer, initialState);
-  const message = state.message;
   const contact = contacts.find((c) => c.id === state.selectedId);
+  const messages = state.messages;
+  const messageObj = messages.find((mess) => mess.id === state.selectedId);
   return (
     <div>
       <ContactList
@@ -17,7 +18,7 @@ export default function Messenger() {
       />
       <Chat
         key={contact.id}
-        message={message}
+        message={messageObj.message}
         contact={contact}
         dispatch={dispatch}
       />

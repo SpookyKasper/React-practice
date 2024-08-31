@@ -1,6 +1,10 @@
 export const initialState = {
   selectedId: 0,
-  message: "Hello",
+  messages: [
+    { message: "Hello", id: 0 },
+    { message: "", id: 1 },
+    { message: "", id: 2 },
+  ],
 };
 
 export function messengerReducer(state, action) {
@@ -9,7 +13,7 @@ export function messengerReducer(state, action) {
       return {
         ...state,
         selectedId: action.contactId,
-        message: "",
+        message: state.messages.find((mess) => mess.id === state.id),
       };
     }
     case "edited_message": {
