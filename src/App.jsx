@@ -3,6 +3,7 @@ import Chat from "./Chat.jsx";
 import ContactList from "./ContactList.jsx";
 import { initialState, messengerReducer } from "./messengerReducer";
 import React from "react";
+import { contacts } from "./messengerReducer.jsx";
 
 export default function Messenger() {
   const [state, dispatch] = useReducer(messengerReducer, initialState);
@@ -27,9 +28,3 @@ export default function Messenger() {
     </div>
   );
 }
-
-const contacts = [
-  { id: 0, name: "Taylor", email: "taylor@mail.com" },
-  { id: 1, name: "Alice", email: "alice@mail.com" },
-  { id: 2, name: "Bob", email: "bob@mail.com" },
-];
