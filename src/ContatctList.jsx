@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function ContactList({ contacts, selectedId, dispatch }) {
   return (
     <section className="contact-list">
