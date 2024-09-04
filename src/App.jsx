@@ -1,5 +1,4 @@
 import React, { memo, Profiler, useMemo, useState, useRef } from "react";
-import React from "react";
 
 // Lets wrap the ButtonComponent with a memo
 // eslint-disable-next-line react/function-component-definition, react/prop-types
@@ -44,7 +43,9 @@ function Counter() {
       <Profiler id="buttoncomponent" onRender={onRender}>
         <h1>{count}</h1>
         {/* Swap handleClick with memoizedHandleClick and vice versa */}
-        <ButtonComponent onClick={handleClick}>Click me!</ButtonComponent>
+        <ButtonComponent onClick={memoizedHandleClick}>
+          Click me!
+        </ButtonComponent>
       </Profiler>
       <div>
         <h2>Base Duration:</h2>
