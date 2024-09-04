@@ -1,24 +1,28 @@
 import React from "react";
 
-export default function ContactList({ contacts, selectedId, dispatch }) {
+export default function CandyDispenser() {
+  const initialCandies = ["snickers", "skittles", "twix", "milky way"];
+  const [candies, setCandies] = React.useState(initialCandies);
+  const dispense = (candy) => {
+    setCandies((allCandies) => allCandies.filter((c) => c !== candy));
+  };
   return (
-    <section className="contact-list">
-      <ul>
-        {contacts.map((contact) => (
-          <li key={contact.id}>
-            <button
-              onClick={() => {
-                dispatch({
-                  type: "changed_selection",
-                  contactId: contact.id,
-                });
-              }}
-            >
-              {selectedId === contact.id ? <b>{contact.name}</b> : contact.name}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <div>
+      <h1>Candy Dispenser</h1>
+      <div>
+        <div>Available Candy</div>
+        {candies.length === 0 ? (
+          <button onClick={() => setCandies(initialCandies)}>refill</button>
+        ) : (
+          <ul>
+            {candies.map((candy) => (
+              <li key={candy}>
+                <button onClick={() => dispense(candy)}>grab</button> {candy}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
   );
 }
