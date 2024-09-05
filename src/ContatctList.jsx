@@ -1,28 +1,16 @@
-import React from "react";
+import { useRef } from "react";
 
-export default function CandyDispenser() {
-  const initialCandies = ["snickers", "skittles", "twix", "milky way"];
-  const [candies, setCandies] = React.useState(initialCandies);
-  const dispense = (candy) => {
-    setCandies((allCandies) => allCandies.filter((c) => c !== candy));
-  };
+export default function Form() {
+  const inputRef = useRef(null);
+
+  function handleClick() {
+    inputRef.current.focus();
+  }
+
   return (
-    <div>
-      <h1>Candy Dispenser</h1>
-      <div>
-        <div>Available Candy</div>
-        {candies.length === 0 ? (
-          <button onClick={() => setCandies(initialCandies)}>refill</button>
-        ) : (
-          <ul>
-            {candies.map((candy) => (
-              <li key={candy}>
-                <button onClick={() => dispense(candy)}>grab</button> {candy}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
+    <>
+      <input ref={inputRef} />
+      <button onClick={handleClick}>Focus the input</button>
+    </>
   );
 }
