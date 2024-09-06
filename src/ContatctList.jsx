@@ -1,16 +1,10 @@
-import { useRef } from "react";
+// option 1
+import React from "react";
 
-export default function Form() {
-  const inputRef = useRef(null);
-
-  function handleClick() {
-    inputRef.current.focus();
-  }
-
-  return (
-    <>
-      <input ref={inputRef} />
-      <button onClick={handleClick}>Focus the input</button>
-    </>
-  );
+function Foo({ bar, baz }) {
+  React.useEffect(() => {
+    const options = { bar, baz };
+    buzz(options);
+  }, [bar, baz]); // we want this to re-run if bar or baz change
+  return <div>foobar</div>;
 }
