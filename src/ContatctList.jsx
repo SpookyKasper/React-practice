@@ -1,35 +1,18 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import React from "react";
 
-export default function Stopwatch() {
-  const [startTime, setStartTime] = useState(null);
-  const [now, setNow] = useState(null);
-  const intervalRef = useRef(null);
+export default function Form() {
+  const inputRef = useRef(null);
 
-  function handleStart() {
-    setStartTime(Date.now());
-    setNow(Date.now());
-
-    clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      setNow(Date.now());
-    }, 1000);
-  }
-
-  function handleStop() {
-    clearInterval(intervalRef.current);
-  }
-
-  let secondsPassed = 0;
-  if (startTime != null && now != null) {
-    secondsPassed = (now - startTime) / 1000;
+  function handleClick() {
+    console.log(inputRef);
+    inputRef.current.focus();
   }
 
   return (
     <>
-      <h1>Time passed: {secondsPassed.toFixed(3)}</h1>
-      <button onClick={handleStart}>Start</button>
-      <button onClick={handleStop}>Stop</button>
+      <input ref={inputRef} className="peakTime" />
+      <button onClick={handleClick}>Focus the input</button>
     </>
   );
 }
