@@ -1,4 +1,4 @@
-import CandyDispenser from "./ContatctList";
+import CandyDispenser from "./ContactList";
 function App() {
   return <CandyDispenser />;
 }
